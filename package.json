@@ -1,0 +1,20 @@
+{
+  "name": "ethereum-provider",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "build": "make build"
+  },
+  "devDependencies": {
+    "dotenv-webpack": "^8.1.0",
+    "prettier": "^3.3.3",
+    "ts-loader": "^9.5.1",
+    "typescript": "^5.6.3",
+    "webpack": "^5.95.0",
+    "webpack-cli": "^5.1.4"
+  },
+  "dependencies": {
+    "@metamask/safe-event-emitter": "^3.1.2"
+  }
+}

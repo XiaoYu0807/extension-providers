@@ -1,0 +1,20 @@
+
+# dependencies
+/node_modules
+
+
+# testing
+/coverage
+.nyc_output
+
+# production
+/dist
+
+# misc
+.env
+
+
+
+npm-debug.log*
+pnpm-lock.yaml*
+pnpm-error.yaml*
