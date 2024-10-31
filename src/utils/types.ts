@@ -1,5 +1,5 @@
 export enum Origin {
-    PROVIDER = 'PROVIDER',
+    PROVIDER = 'ETH_PROVIDER',
     BACKGROUND = 'BACKGROUND',
 }
 
