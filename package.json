@@ -15,6 +15,7 @@
     "webpack-cli": "^5.1.4"
   },
   "dependencies": {
-    "@metamask/safe-event-emitter": "^3.1.2"
+    "@metamask/safe-event-emitter": "^3.1.2",
+    "eth-rpc-errors": "^4.0.3"
   }
 }
