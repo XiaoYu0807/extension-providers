@@ -19,3 +19,9 @@ export interface Handler {
 }
 
 export type Handlers = Record<string, Handler>;
+
+export interface handleResponseData {
+    id: string;
+    error?: string;
+    response?: unknown;
+}

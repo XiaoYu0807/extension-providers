@@ -38,6 +38,25 @@ export default class EthereumProvider extends SafeEventEmitter {
         return this._postMessage(MessageType.REQUEST, args);
     }
 
+    public handleResponse = (data: {
+        id: string;
+        error: any;
+        response: any;
+    }) => {
+        const handler = this._handlers[data.id];
+
+        if (!handler) return;
+
+        if (data.error) {
+            const parsedError = JSON.parse(data.error);
+            const err = new Error(parsedError.message);
+
+            handler.reject(err);
+        } else {
+            handler.resolve(data.response);
+        }
+    };
+
     private _postMessage(
         messageType: MessageType,
         request?: RequestArguments,
@@ -45,7 +64,7 @@ export default class EthereumProvider extends SafeEventEmitter {
         return new Promise((resolve, reject): void => {
             const id = `${Date.now()}.${++this._requestId}`;
 
-            // 将该请求消息回调存储起来
+            // 将该请求消息回调存储起来 方便回调返回
             this._handlers[id] = {
                 resolve,
                 reject,
