@@ -91,7 +91,7 @@ export default class EthereumProvider extends SafeEventEmitter {
             id,
             messageType,
             request,
-            origin: Origin.PROVIDER,
+            origin: Origin.ETH_PROVIDER,
         };
 
         return JSON.parse(JSON.stringify(message));

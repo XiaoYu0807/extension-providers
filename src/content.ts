@@ -29,7 +29,7 @@ function injectEthereumProvider() {
 injectEthereumProvider();
 
 function init() {
-    port = browser.runtime.connect({ name: Origin.PROVIDER });
+    port = browser.runtime.connect({ name: Origin.PROVIDERS });
 
     port.onMessage.addListener((message: any): void => {
         const newMessage = {
