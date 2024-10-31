@@ -51,7 +51,6 @@ init();
 
 window.addEventListener('message', (message) => {
     const { data } = message;
-    console.log('content:message', data);
 
     if (!validateContentMessageDispatch(data)) return;
 
