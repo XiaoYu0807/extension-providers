@@ -10,7 +10,7 @@ import {
 import { ethErrors } from 'eth-rpc-errors';
 
 export default class EthereumProvider extends SafeEventEmitter {
-    public isEthereumWallet = true;
+    public isWallet = true;
     public isMetaMask = false;
 
     private _requestId = 0;
