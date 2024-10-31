@@ -20,8 +20,19 @@ export interface Handler {
 
 export type Handlers = Record<string, Handler>;
 
-export interface handleResponseData {
+export interface ProviderMessage {
+    id: string;
+    messageType: MessageType;
+    origin: Origin;
+    request?: unknown;
+}
+
+export interface HandleResponseData {
     id: string;
     error?: string;
     response?: unknown;
+}
+
+export interface WindowResponseMessageBody extends HandleResponseData {
+    origin: Origin;
 }

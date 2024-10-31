@@ -1,5 +1,12 @@
 import SafeEventEmitter from '@metamask/safe-event-emitter';
-import { Handlers, MessageType, Origin, RequestArguments } from './utils/types';
+import {
+    HandleResponseData,
+    Handlers,
+    MessageType,
+    Origin,
+    ProviderMessage,
+    RequestArguments,
+} from './utils/types';
 import { ethErrors } from 'eth-rpc-errors';
 
 export default class EthereumProvider extends SafeEventEmitter {
@@ -38,11 +45,7 @@ export default class EthereumProvider extends SafeEventEmitter {
         return this._postMessage(MessageType.REQUEST, args);
     }
 
-    public handleResponse = (data: {
-        id: string;
-        error: any;
-        response: any;
-    }) => {
+    public handleResponse = (data: HandleResponseData) => {
         const handler = this._handlers[data.id];
 
         if (!handler) return;
@@ -62,22 +65,13 @@ export default class EthereumProvider extends SafeEventEmitter {
         request?: RequestArguments,
     ): Promise<any> {
         return new Promise((resolve, reject): void => {
-            const id = `${Date.now()}.${++this._requestId}`;
+            const message = this._getMessage(messageType, request);
 
             // 将该请求消息回调存储起来 方便回调返回
-            this._handlers[id] = {
+            this._handlers[message.id] = {
                 resolve,
                 reject,
             };
-
-            const message = JSON.parse(
-                JSON.stringify({
-                    id,
-                    messageType,
-                    request,
-                    origin: Origin.PROVIDER,
-                }),
-            );
 
             try {
                 postMessage(message, location.href);
@@ -85,5 +79,21 @@ export default class EthereumProvider extends SafeEventEmitter {
                 throw error;
             }
         });
+    }
+
+    private _getMessage(
+        messageType: MessageType,
+        request?: RequestArguments,
+    ): ProviderMessage {
+        const id = `${Date.now()}.${++this._requestId}`;
+
+        const message = {
+            id,
+            messageType,
+            request,
+            origin: Origin.PROVIDER,
+        };
+
+        return JSON.parse(JSON.stringify(message));
     }
 }

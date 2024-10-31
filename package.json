@@ -7,6 +7,7 @@
     "build": "make build"
   },
   "devDependencies": {
+    "@types/webextension-polyfill": "^0.12.1",
     "dotenv-webpack": "^8.1.0",
     "prettier": "^3.3.3",
     "ts-loader": "^9.5.1",
@@ -16,6 +17,7 @@
   },
   "dependencies": {
     "@metamask/safe-event-emitter": "^3.1.2",
-    "eth-rpc-errors": "^4.0.3"
+    "eth-rpc-errors": "^4.0.3",
+    "webextension-polyfill": "^0.12.0"
   }
 }
