@@ -1,11 +1,13 @@
 import SafeEventEmitter from '@metamask/safe-event-emitter';
-import { RequestArguments } from './utils/types';
+import { Handlers, MessageType, Origin, RequestArguments } from './utils/types';
 import { ethErrors } from 'eth-rpc-errors';
 
 export default class EthereumProvider extends SafeEventEmitter {
-    isEthereumWallet = true;
+    public isEthereumWallet = true;
+    public isMetaMask = false;
 
-    isMetaMask = false;
+    private _requestId = 0;
+    private _handlers: Handlers = {};
 
     constructor() {
         super();
@@ -33,6 +35,36 @@ export default class EthereumProvider extends SafeEventEmitter {
             });
         }
 
-        return Promise.resolve('send message');
+        return this._postMessage(MessageType.REQUEST, args);
+    }
+
+    private _postMessage(
+        messageType: MessageType,
+        request?: RequestArguments,
+    ): Promise<any> {
+        return new Promise((resolve, reject): void => {
+            const id = `${Date.now()}.${++this._requestId}`;
+
+            // 将该请求消息回调存储起来
+            this._handlers[id] = {
+                resolve,
+                reject,
+            };
+
+            const message = JSON.parse(
+                JSON.stringify({
+                    id,
+                    messageType,
+                    request,
+                    origin: Origin.PROVIDER,
+                }),
+            );
+
+            try {
+                postMessage(message, location.href);
+            } catch (error) {
+                throw error;
+            }
+        });
     }
 }
