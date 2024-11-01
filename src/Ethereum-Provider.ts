@@ -20,7 +20,7 @@ export default class EthereumProvider extends SafeEventEmitter {
         super();
     }
 
-    public async request(args: RequestArguments): Promise<unknown> {
+    public request = (args: RequestArguments): Promise<unknown> => {
         const { method, params } = args;
 
         if (typeof method !== 'string' || method.length === 0) {
@@ -43,7 +43,7 @@ export default class EthereumProvider extends SafeEventEmitter {
         }
 
         return this._postMessage(MessageType.REQUEST, args);
-    }
+    };
 
     public handleResponse = (data: HandleResponseData) => {
         const handler = this._handlers[data.id];
@@ -60,10 +60,10 @@ export default class EthereumProvider extends SafeEventEmitter {
         }
     };
 
-    private _postMessage(
+    private _postMessage = (
         messageType: MessageType,
         request?: RequestArguments,
-    ): Promise<any> {
+    ): Promise<any> => {
         return new Promise((resolve, reject): void => {
             const message = this._getMessage(messageType, request);
 
@@ -79,12 +79,12 @@ export default class EthereumProvider extends SafeEventEmitter {
                 throw error;
             }
         });
-    }
+    };
 
-    private _getMessage(
+    private _getMessage = (
         messageType: MessageType,
         request?: RequestArguments,
-    ): ProviderMessage {
+    ): ProviderMessage => {
         const id = `${Date.now()}.${++this._requestId}`;
 
         const message = {
@@ -95,5 +95,5 @@ export default class EthereumProvider extends SafeEventEmitter {
         };
 
         return JSON.parse(JSON.stringify(message));
-    }
+    };
 }
