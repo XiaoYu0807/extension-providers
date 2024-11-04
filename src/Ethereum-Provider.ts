@@ -12,12 +12,17 @@ import { ethErrors } from 'eth-rpc-errors';
 export default class EthereumProvider extends SafeEventEmitter {
     public isWallet = true;
     public isMetaMask = false;
+    public _metamask: {
+        isUnlocked?: () => boolean;
+    } = {};
 
     private _requestId = 0;
     private _handlers: Handlers = {};
 
     constructor() {
         super();
+
+        this._metamask.isUnlocked = this.isUnlocked;
     }
 
     public request = (args: RequestArguments): Promise<unknown> => {
@@ -46,6 +51,10 @@ export default class EthereumProvider extends SafeEventEmitter {
     };
 
     public isConnected = () => {
+        return true;
+    };
+
+    public isUnlocked = () => {
         return true;
     };
 
