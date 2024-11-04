@@ -45,6 +45,10 @@ export default class EthereumProvider extends SafeEventEmitter {
         return this._postMessage(MessageType.REQUEST, args);
     };
 
+    public isConnected = () => {
+        return true;
+    };
+
     public handleResponse = (data: HandleResponseData) => {
         const handler = this._handlers[data.id];
 
