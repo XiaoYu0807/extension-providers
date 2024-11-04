@@ -37,3 +37,10 @@ export interface HandleResponseData {
 export interface WindowResponseMessageBody extends HandleResponseData {
     origin: Origin;
 }
+
+export interface EIP6963ProviderInfo {
+    uuid: string;
+    name: string;
+    icon: string;
+    rdns: string;
+}
